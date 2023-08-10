@@ -11,12 +11,72 @@ gitbash 검색 -> git-scm.com 접속 -> 설치
 
 터미널 -> + -> git bash 클릭
 
-1. 깃설정
+1. 깃설정 (버전관리==형상관리, 협업)
 git init
 
-목록보기 숨김목록까지 모두 보기
+2. 목록보기 숨김목록까지 모두 보기
 ls -la
 
-환경설정
-본인 아이디
-본인 이메일
+3. 환경설정
+웹브라우저에는 로그인 상태에서
+본인 아이디(name) 등록
+본인 이메일(email) 등록
+
+git config user.name "minjeong46"
+git config user.email "eyou46@naver.com"
+
+git config user.name    로 확인
+git config user.email
+
+4. 원격으로 오리진 등록(추가)
+http://
+https://  ssl 웹보안인증서
+
+https://github.com/minjeong46/genesis.git
+추가
+git remote add origin https://github.com/minjeong46/genesis.git 
+
+오리진 주소가 잘못 기록된 경우 삭제하고
+git remote remove origin
+검증
+got remote -v
+
+다시 추가한다.
+git remote add origin https://github.com/minjeong46/genesis.git 
+
+확인
+git remote -v
+
+화면지우기(청소)
+clear
+모든 리스트를 볼 수 있다.
+git config --list 
+
+
+5. 스테이징
+git add .
+
+6. 커밋 (빠진게 있는지)
+git commit -m '제네시스 메인슬라이드'
+
+7. 푸쉬
+git push origin master
+
+8. 인증이 되어야 푸쉬가 완료된다.
+windows -> 설정 -> windows 자격 증명 관리 에서 git 등록한 자격 증명(웹 주소) 확인 가능하며 편집,삭제 가능
+user.name, user.password 가 관리된다.
+한 컴퓨터에서 여러 사용자가 사용시 추가 등록하여 사용 가능
+푸쉬한 모든 데이터 확인
+
+9. 깃허브에서 새로고침 -> 올라온 파일 확인
+
+10. settings 클릭
+
+11. 좌측 카테고리 메뉴 중 Pages 클릭
+
+12. GitHub Pages -> 아래 중간-> Branch -> master 선택 -> save 클릭 -> 1분~3분 대기 -> 새로고침
+
+13. 상단에 배포주소가 나타난다.
+https://minjeong46.github.io/genesis/
+
+Visit Site 클릭하면 배포된 홈페이지 브라우저에 나타난다.
