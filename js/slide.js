@@ -267,7 +267,7 @@
             const slideContainer = $('#section2 .slide-container');
             const slideWrap = $('#section2 .slide-wrap');
             const slideView = $('#section2 .slide-view');
-            const slide = $('#section2 .slide-view .slide');
+            const slide = $('#section2 .slide-view .slide'); // 10개
             const slideH3 = $('#section2 .slide-view .slide h3');
             const slideH4 = $('#section2 .slide-view .slide h4');
             const pageBtn = $('#section2 .page-btn');
@@ -275,6 +275,7 @@
             const subMenu = $('#section2 .sub-menu');
             const materialIcons = $('#section2  .select-btn .material-icons');
             const heigthRate = 0.884545392; // 너비에 대한 높이 비율
+            let n = slide.length-2;   // 8개
 
 
             // 터치스와이프
@@ -306,22 +307,51 @@
                 //1. 창 크기가 1642 픽셀 이하에서 패딩 좌측 값 0으로 설정
                 if(winW <= 1642){ // 1642 이하
 
-                    if(winW > 1280){ // 1280 초과에서는 슬라이드 3개
+                    if(winW > 1280){ // 1280 초과에서는 슬라이드 3개 , 10/1(1개씩 이동)-2(마지막 2개 슬라이드는 움직이면 안됨) = 8
                         slideWidth = (section2Container.innerWidth()-0+20+20)/3 // wrap에서 maginleft -20px 를 살리기 위해 
+                        // n = n-2; // 1280 초과일때 슬라이드를 8개만 보여라
+                        n = slide.length-2; // 오른쪽 2개 슬라이드가 남아야해서
+
+                        //페이지 버튼 제어(갯수) 8개인 경우 / 10개인 경우
+                        pageBtn.css({ display: 'none' }); //초기값! 10개 모두 숨김
+                        for(let i=0; i<n; i++){ // 8미만 7까지
+                            pageBtn.eq(i).css({ display: 'block' }); // 앞에 순차적으로 8개만 보임   i는 0~7 (8개)
+                        }
+                        // pageBtn.eq(8).css({ display: 'none' });   //9번째
+                        // pageBtn.eq(9).css({ display: 'none' })   //10번째
+                        
+                        if(cnt>=n-1){
+                            cnt=n-1;
+                        }
+                    
                     }
                     else{  // 1280 이하에서는 슬라이드 1개
                         slideWidth = (section2Container.innerWidth()-0+20+20)/1  
+                        // n = n;
+                        console.log(slide.length);
+                        n = slide.length; // 10/1 =10개 1개씩 이동 
+                        pageBtn.css({ display: 'block' });// 10개 보임 (0~9) 그냥 모두 보여라
                     }
+
+                        // pageBtn.eq(8).css({ display: 'block' });  //9번째
+                        // pageBtn.eq(9).css({ display: 'block' })   //10번째
+
 
                 }
                 else{ // 1642 초과
                     slideWidth = (section2Container.innerWidth()-198+20+20)/3; // 한 화면 슬라이드 너비에서 magin 198를 빼준다
+                    pageBtn.css({ display: 'none' });
+                    for(let i=0; i<n; i++){ // 8미만 7까지
+                        pageBtn.eq(i).css({ display: 'block' }); // 앞에 순차적으로 8개만 보임   i는 0~7 (8개)
+                    }
                 }
+                    slideWrap.css({width: slideWidth * 10}); // 슬라이드 전체박스
+                    slide.css({width: slideWidth, height: slideWidth*heigthRate}); // 슬라이드 한개 당
+                    slideH3.css({fontSize: slideWidth*0.08}) // 38/448.333
+                    slideH4.css({fontSize: slideWidth*0.03}) // 16/448.333
+                    
                 
-                slideWrap.css({width: slideWidth * 10}); // 슬라이드 전체박스
-                slide.css({width: slideWidth, height: slideWidth*heigthRate}); // 슬라이드 한개 당
-                slideH3.css({fontSize: slideWidth*0.08}) // 38/448.333
-                slideH4.css({fontSize: slideWidth*0.03}) // 16/448.333
+ 
                 mainSlide(); // 메인 슬라이드에 슬라이드 너비 전달하기 위해서 가져옴
             }
 
@@ -331,10 +361,6 @@
                 resizeFn();
                
             });
-
-
-
-
 
 
             slideContainer.on({
@@ -452,7 +478,7 @@
             // 다음카운트함수
             function nextCount(){
                 cnt++;
-                if(cnt>7) {cnt=7};
+                if(cnt>n-1) {cnt=n-1};  // 8(0~7) - 1   if(cnt>7){cnt=7} => 슬라이드 고정
                 mainSlide();
             }
 
